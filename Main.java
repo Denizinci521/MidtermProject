@@ -96,7 +96,31 @@ public class Main {
     }
 
     public static int commodityProfitInRange(String commodity, int from, int to) {
-        return 1234;
+        if (from < 1 || from > 28 || to < 1 || to > 28 || from > to) {
+            return -99999;
+        }
+
+
+        int commodityIndex = -1; // girilen Commodity'nin indexini bulmak için
+        for (int c = 0; c < COMMS; c++) {
+            if (commodities[c].equals(commodity)) {
+                commodityIndex = c;
+                break;
+            }
+        }
+        if (commodityIndex == -1) {
+            return -99999;
+        }
+
+        int totalProfit = 0;
+
+
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = from - 1; d <= to - 1; d++) { // array 0-index
+                totalProfit += DatesAndCommodities[m][d][commodityIndex];
+            }
+        }
+        return totalProfit;
     }
 
     public static int bestDayOfMonth(int month) {
