@@ -228,7 +228,31 @@ public class Main {
     }
 
     public static int biggestDailySwing(int month) {
-        return 1234;
+        if (month < 0 || month > 11) {
+            return -99999; // geçersiz ay için
+        }
+        int maxSwing = 0;
+
+        for (int d = 0; d < DAYS - 1; d++) {
+            int profitToday = 0;
+            int profitTomorrow = 0;
+
+
+            for (int c = 0; c < COMMS; c++) {
+                profitToday += DatesAndCommodities[month][d][c];
+                profitTomorrow += DatesAndCommodities[month][d + 1][c];
+            }
+            int swing = profitToday - profitTomorrow;
+
+            if (swing < 0 ){
+                swing *= -1;
+            }
+
+            if (swing > maxSwing) {
+                maxSwing = swing;
+            }
+        }
+        return maxSwing;
     }
 
     public static String compareTwoCommodities(String c1, String c2) {
