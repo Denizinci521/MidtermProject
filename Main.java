@@ -173,7 +173,31 @@ public class Main {
     }
 
     public static int consecutiveLossDays(String comm) {
-        return 1234;
+        int commodityIndex = -1;
+        for (int c = 0; c < COMMS; c++) {
+            if (commodities[c].equals(comm)) { // commoditynin indexini bulmak için bir çok yerde kullanmıştık zaten
+                commodityIndex = c;
+                break;
+            }
+        }
+        if (commodityIndex == -1) {
+            return -1; //
+        }
+        int maxLossStreak = 0;
+        int currentLossStreak = 0;
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = 0; d < DAYS; d++) {
+                if ( DatesAndCommodities[m][d][commodityIndex] < 0) {
+                    currentLossStreak++;
+                    if (currentLossStreak > maxLossStreak) {
+                        maxLossStreak = currentLossStreak;
+                    }
+                } else {
+                    currentLossStreak = 0;
+                }
+            }
+        }
+        return maxLossStreak;
     }
 
     public static int daysAboveThreshold(String comm, int threshold) {
