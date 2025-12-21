@@ -256,11 +256,66 @@ public class Main {
     }
 
     public static String compareTwoCommodities(String c1, String c2) {
-        return "DUMMY is better by 1234";
+        int indexOfC1 = -1;
+        int indexOfC2 = -1;
+
+        for (int c = 0; c < COMMS; c++) {
+            if (commodities[c].equals(c1)) {
+                indexOfC1 = c;
+            }
+            if (commodities[c].equals(c2)) {
+                indexOfC2 = c;
+            }
+        }
+
+        if (indexOfC1 == -1 || indexOfC2 == -1) {
+            return "INVALID_COMMODITY";
+        }
+
+        int totalc1 = 0;
+        int totalc2 = 0;
+
+        for (int m = 0; m < MONTHS; m++) {
+            for (int d = 0; d < DAYS; d++) {
+                totalc1 += DatesAndCommodities[m][d][indexOfC1];
+                totalc2 += DatesAndCommodities[m][d][indexOfC2];
+            }
+        }
+
+        if (totalc1 > totalc2) {
+            return c1 + " is better by " + (totalc1 - totalc2);
+        } else if (totalc2 > totalc1) {
+            return c2 + " is better by " + (totalc2 - totalc1);
+        } else {
+            return "Equal";
+        }
     }
 
     public static String bestWeekOfMonth(int month) {
-        return "DUMMY";
+        if (month < 0 || month > 11) {
+            return "INVALID_MONTH";
+        }
+
+        int bestWeek = 1;
+        int maxProfit = Integer.MIN_VALUE;
+
+        for (int w = 0; w < 4; w++) {
+            int weekProfit = 0;
+            int startDay = w * 7;
+
+            for (int d = startDay; d < startDay + 7; d++) {
+                for (int c = 0; c < COMMS; c++) {
+                    weekProfit += DatesAndCommodities[month][d][c];
+                }
+            }
+
+            if (weekProfit > maxProfit) {
+                maxProfit = weekProfit;
+                bestWeek = w + 1;
+            }
+        }
+
+        return "Week " + bestWeek;
     }
 
     public static void main(String[] args) {
