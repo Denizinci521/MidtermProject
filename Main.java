@@ -90,7 +90,7 @@ public class Main {
         int totalProfit = 0;
 
         for ( int c = 0; c < COMMS; c++) {
-            totalProfit += DatesAndCommodities[month][c][day-1];
+            totalProfit += DatesAndCommodities[month][day-1][c];
         }
         return totalProfit;
     }
